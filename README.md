@@ -14,7 +14,7 @@ import torchaudio \
 import torch \
 import torch.nn as nn \
 import torch.nn.functional as F \
-from torchvision import models \
+from torchvision import models
 
 #TRAINING FUNCTION 
 #1)Требования к файлам
@@ -27,7 +27,7 @@ csv_path_t=csv_path #путь к тестовому csv \
 audio_path_t=audio_path #путь к тестовому аудио \
 save_pth='test_save_pth' #куда сохранить параметры \
 deviceU=True #использовать ли GPU \
-testT=True #Проводить ли тестирование \ 
+testT=True #Проводить ли тестирование \
 save=True #сохранять ли веса \
 #2)То, что влияет непосредственно на сетку \
 batch_size=8 #Не думаю , что вам нужно это менять. Пока количество ваших данных очень мало - оставьте таким, когда размер датасета перевалит за 8к (Если перевалит) , то можно попробовать увеличить до 16 \
