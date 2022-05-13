@@ -21,7 +21,6 @@ class SoundDataset(Dataset):
         self.return_audio = return_audio
         self.resample = resample_freq
 
-        # loop through the csv entries and only add entries from folders in the folder list
         csvData = pd.read_csv(csv_path)
         csvData=csvData.loc[:, ~csvData.columns.str.match("Unnamed")]
         fi=list(csvData.columns).index('path')
