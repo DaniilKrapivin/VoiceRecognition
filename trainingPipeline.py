@@ -37,10 +37,9 @@ def train(model,optimizer,criterion,scheduler,epoch,loader,device,log_interval=1
         inputs = inputs.to(device)
         labels = labels.to(device)
 
-        # zero the parameter gradients
+
         optimizer.zero_grad()
 
-        # forward + backward + optimize
         outputs = model(inputs)
         _, predicted = torch.max(outputs, 1)
         loss = criterion(outputs, labels)
@@ -49,16 +48,16 @@ def train(model,optimizer,criterion,scheduler,epoch,loader,device,log_interval=1
 
         iteration = epoch * len(loader) + batch_idx
         if batch_idx % log_interval == 0:  # print training stats
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'
+            print('Эпоха: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'
                   .format(epoch, batch_idx * len(inputs), len(loader.dataset),
                           100. * batch_idx / len(loader), loss))
-            tensorboard_writer.add_scalar('training loss/loss', loss, iteration)
-            tensorboard_writer.add_scalar('learning rate/lr', optimizer.param_groups[0]['lr'], iteration)
+            tensorboard_writer.add_scalar('Loss на обучении', loss, iteration)
+            tensorboard_writer.add_scalar('learning rate', optimizer.param_groups[0]['lr'], iteration)
 
-        if batch_idx % debug_interval == 0:  # report debug image every "debug_interval" mini-batches
+        if batch_idx % debug_interval == 0: 
             for n, (inp, pred, label) in enumerate(zip(inputs, predicted, labels)):
                 series = 'label_{}_pred_{}'.format(label.cpu(), pred.cpu())
-                tensorboard_writer.add_image('Train MelSpectrogram samples/{}_{}_{}'.format(batch_idx, n, series),
+                tensorboard_writer.add_image('Тренировочные MelSpectrogram сэмплы/{}_{}_{}'.format(batch_idx, n, series),
                                              plot_signal(inp.cpu().numpy().squeeze(), series, 'hot'), iteration)
 
 
@@ -81,18 +80,17 @@ def test(model,epoch,t_loader,n_classes,device,log_interval=10,debug_interval=25
                 class_total[label] += 1
 
             iteration = (epoch + 1) * len(t_loader)
-            if idx % debug_interval == 0:  # report debug image every "debug_interval" mini-batches
+            if idx % debug_interval == 0: 
                 for n, (sound, inp, pred, label) in enumerate(zip(sounds, inputs, predicted, labels)):
                     series = 'label_{}_pred_{}'.format(label.cpu(), pred.cpu())
-                    tensorboard_writer.add_audio('Test audio samples/{}_{}_{}'.format(idx, n, series),
+                    tensorboard_writer.add_audio('Тестовые аудио сэмплы/{}_{}_{}'.format(idx, n, series),
                                                  sound, iteration, int(sample_rate[n]))
-                    tensorboard_writer.add_image('Test MelSpectrogram samples/{}_{}_{}'.format(idx, n, series),
+                    tensorboard_writer.add_image('Тестовые MelSpectrogram сэмплы/{}_{}_{}'.format(idx, n, series),
                                                  plot_signal(inp.cpu().numpy().squeeze(), series, 'hot'), iteration)
 
     total_accuracy = 100 * sum(class_correct) / sum(class_total)
-    print('[Iteration {}] Accuracy on the {} test images: {}%\n'.format(epoch, sum(class_total), total_accuracy))
-    tensorboard_writer.add_scalar('accuracy/total', total_accuracy, iteration)
-
+    print('[Итерация {}] Точность на {} тестовых сэмплов: {}%\n'.format(epoch, sum(class_total), total_accuracy))
+    tensorboard_writer.add_scalar('конечная точность', total_accuracy, iteration)
 
 
 
