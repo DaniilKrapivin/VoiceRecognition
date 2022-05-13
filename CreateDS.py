@@ -70,7 +70,7 @@ class SoundDataset(Dataset):
 def create_train(csv_path,audio_path,batch_size,return_a):
     set = SoundDataset(csv_path, audio_path ,
                                   resample_freq=22050, return_audio=return_a)
-    print("Set size: " + str(len(set)))
+    print("Размер набора: " + str(len(set)))
     loader = torch.utils.data.DataLoader(set, batch_size=batch_size,
                                                shuffle=True, pin_memory=True)
     return loader
