@@ -3,7 +3,7 @@
 
 from CreateDS import SoundDataset, create_train \
 from NetConf import create_model \
-from trainingPipeline import full_train \ 
+from trainingPipeline import full_train \
 from trainingPipeline import train,test,plot_signal \
 import pandas as pd \
 from torch.utils.tensorboard import SummaryWriter \
