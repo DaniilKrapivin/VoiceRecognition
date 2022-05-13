@@ -1,23 +1,23 @@
 # VoiceRecognition
 #IMPORTS: Необходимые для работы
 
-from CreateDS import SoundDataset, create_train 
-from NetConf import create_model 
-from trainingPipeline import full_train 
-from trainingPipeline import train,test,plot_signal 
-import pandas as pd 
-from torch.utils.tensorboard import SummaryWriter 
-import torch 
-import os 
-import numpy as np 
-import torchaudio
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torchvision import models
+from CreateDS import SoundDataset, create_train /
+from NetConf import create_model /
+from trainingPipeline import full_train / 
+from trainingPipeline import train,test,plot_signal /
+import pandas as pd /
+from torch.utils.tensorboard import SummaryWriter /
+import torch /
+import os /
+import numpy as np /
+import torchaudio /
+import torch /
+import torch.nn as nn /
+import torch.nn.functional as F /
+from torchvision import models /
 
 #TRAINING FUNCTION 
-#1)Требования к файлам 
+#1)Требования к файлам
 #СSV файл должен выглядеть также, как выглядит TDF.сsv. Только колонки должны называться path и classID 
 #Аудио файлы должны быть формата .wav, дополнительных преобразований не требуется 
 
